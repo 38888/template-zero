@@ -1,7 +1,7 @@
 func (m *default{{.upperStartCamelObject}}Model) FindOne(ctx context.Context, {{.lowerStartCamelPrimaryKey}} {{.dataType}}) (*entity.{{.upperStartCamelObject}}, error) {
 
-	qb := m.conn.{{.upperStartCamelObject}}
-    resp, err := qb.WithContext(ctx).Where(qb.{{.lowerStartCamelPrimaryKey}}.Eq({{.lowerStartCamelPrimaryKey}})).Take()
+	{{.lowerStartCamelObject}} := m.conn.{{.upperStartCamelObject}}
+    resp, err := {{.lowerStartCamelObject}}.WithContext(ctx).Where({{.lowerStartCamelObject}}.{{.UpperStartCamelPrimaryKey}}.Eq({{.lowerStartCamelPrimaryKey}})).Take()
 	if err != nil {
 		return nil, err
 	}

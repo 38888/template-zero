@@ -1,8 +1,8 @@
 func (m *default{{.upperStartCamelObject}}Model) Insert(ctx context.Context, data *entity.{{.upperStartCamelObject}}) error {
 
-	qb := m.conn.{{.upperStartCamelObject}}
+	{{.lowerStartCamelObject}} := m.conn.{{.upperStartCamelObject}}
 
-    err := qb.WithContext(ctx).Create(data)
+    err := {{.lowerStartCamelObject}}.WithContext(ctx).Create(data)
     if err != nil {
     	return err
     }
