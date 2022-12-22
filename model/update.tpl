@@ -1,8 +1,8 @@
 func (m *default{{.upperStartCamelObject}}Model) Update(ctx context.Context, newData *entity.{{.upperStartCamelObject}}) error {
 
 
-	qb := m.conn.{{.upperStartCamelObject}}
-	resultInfo, err := qb.WithContext(ctx).Where(qb.{{.upperStartCamelPrimaryKey}}.Eq(newData.{{.upperStartCamelPrimaryKey}})).Updates(newData)
+	{{.lowerStartCamelObject}} := m.conn.{{.upperStartCamelObject}}
+	resultInfo, err := {{.lowerStartCamelObject}}.WithContext(ctx).Where({{.lowerStartCamelObject}}.{{.UpperStartCamelPrimaryKey}}.Eq(newData.{{.UpperStartCamelPrimaryKey}})).Updates(newData)
 
 	if err != nil {
 		return err
