@@ -4,6 +4,7 @@ import (
 	"net/http"
     "panda/common/result"
 	"github.com/zeromicro/go-zero/rest/httpx"
+	vd "github.com/38888/go-tagexpr-new/validator"
 	{{.ImportPackages}}
 )
 
@@ -14,7 +15,10 @@ func {{.HandlerName}}(svcCtx *svc.ServiceContext) http.HandlerFunc {
 			result.ParamErrorResult(r,w,err)
             return
 		}
-
+        if err := vd.Validate(req); err != nil {
+           result.ParamErrorResult(r,w,err)
+           return
+        }
 		{{end}}l := {{.LogicName}}.New{{.LogicType}}(r.Context(), svcCtx)
 		{{if .HasResp}}resp, {{end}}err := l.{{.Call}}({{if .HasRequest}}&req{{end}})
 		result.HttpResult(r, w, {{if .HasResp}}resp{{else}}nil{{end}}, err)
