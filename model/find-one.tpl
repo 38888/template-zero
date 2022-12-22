@@ -1,26 +1,10 @@
-func (m *default{{.upperStartCamelObject}}Model) FindOne(ctx context.Context, {{.lowerStartCamelPrimaryKey}} {{.dataType}}) (*{{.upperStartCamelObject}}, error) {
-	{{if .withCache}}{{.cacheKey}}
-	var resp {{.upperStartCamelObject}}
-	err := m.QueryRowCtx(ctx, &resp, {{.cacheKeyVariable}}, func(ctx context.Context, conn sqlx.SqlConn, v interface{}) error {
-		query :=  fmt.Sprintf("select %s from %s where {{.originalPrimaryKey}} = {{if .postgreSql}}$1{{else}}?{{end}} limit 1", {{.lowerStartCamelObject}}Rows, m.table)
-		return conn.QueryRowCtx(ctx, v, query, {{.lowerStartCamelPrimaryKey}})
-	})
-	switch err {
-	case nil:
-		return &resp, nil
-	case sqlc.ErrNotFound:
-		return nil, ErrNotFound
-	default:
+func (m *default{{.upperStartCamelObject}}Model) FindOne(ctx context.Context, {{.lowerStartCamelPrimaryKey}} {{.dataType}}) (*entity.{{.upperStartCamelObject}}, error) {
+
+	{{.lowerStartCamelObject}} := m.conn.{{.upperStartCamelObject}}
+    resp, err := {{.lowerStartCamelObject}}.WithContext(ctx).Where({{.lowerStartCamelObject}}.{{.upperStartCamelPrimaryKey}}.Eq({{.lowerStartCamelPrimaryKey}})).Take()
+	if err != nil {
 		return nil, err
-	}{{else}}query := fmt.Sprintf("select %s from %s where {{.originalPrimaryKey}} = {{if .postgreSql}}$1{{else}}?{{end}} limit 1", {{.lowerStartCamelObject}}Rows, m.table)
-	var resp {{.upperStartCamelObject}}
-	err := m.conn.QueryRowCtx(ctx, &resp, query, {{.lowerStartCamelPrimaryKey}})
-	switch err {
-	case nil:
-		return &resp, nil
-	case sqlc.ErrNotFound:
-		return nil, ErrNotFound
-	default:
-		return nil, err
-	}{{end}}
+	}
+	return resp, nil
+
 }

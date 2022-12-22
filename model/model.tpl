@@ -23,7 +23,7 @@ type (
 )
 
 // New{{.upperStartCamelObject}}Model returns a model for the database table.
-func New{{.upperStartCamelObject}}Model(conn sqlx.SqlConn{{if .withCache}}, c cache.CacheConf{{end}}) {{.upperStartCamelObject}}Model {
+func New{{.upperStartCamelObject}}Model(conn *dao.Query{{if .withCache}}, c cache.CacheConf{{end}}) {{.upperStartCamelObject}}Model {
 	return &custom{{.upperStartCamelObject}}Model{
 		default{{.upperStartCamelObject}}Model: new{{.upperStartCamelObject}}Model(conn{{if .withCache}}, c{{end}}),
 	}

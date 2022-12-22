@@ -1,5 +1,9 @@
 package {{.pkg}}
 
-import "github.com/zeromicro/go-zero/core/stores/sqlx"
+import (
+	"github.com/pkg/errors"
+	"gorm.io/gorm"
+)
 
-var ErrNotFound = sqlx.ErrNotFound
+var ErrNotFound = gorm.ErrRecordNotFound
+var NotAffectedErr = errors.New("未成功更新数据")
