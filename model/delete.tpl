@@ -2,7 +2,7 @@ func (m *default{{.upperStartCamelObject}}Model) Delete(ctx context.Context, {{.
 
 	qb := m.conn.{{.upperStartCamelObject}}
 
-	if _, err := qb.WithContext(ctx).Where(qb.{{.upperStartCamelPrimaryKey}}.Eq({{.lowerStartCamelPrimaryKey}})).Delete(); err != nil {
+	if _, err := qb.WithContext(ctx).Where(qb.{{.lowerStartCamelPrimaryKey}}.Eq({{.lowerStartCamelPrimaryKey}})).Delete(); err != nil {
 		return err
 	}
 	return nil
