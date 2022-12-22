@@ -1,8 +1,8 @@
 func (m *default{{.upperStartCamelObject}}Model) Delete(ctx context.Context, {{.lowerStartCamelPrimaryKey}} {{.dataType}}) error {
 
-	qb := m.conn.{{.upperStartCamelObject}}
+	{{.lowerStartCamelObject}} := m.conn.{{.upperStartCamelObject}}
 
-	if _, err := qb.WithContext(ctx).Where(qb.{{.lowerStartCamelPrimaryKey}}.Eq({{.lowerStartCamelPrimaryKey}})).Delete(); err != nil {
+	if _, err := {{.lowerStartCamelObject}}.WithContext(ctx).Where({{.lowerStartCamelObject}}.{{.UpperStartCamelPrimaryKey}}.Eq({{.lowerStartCamelPrimaryKey}})).Delete(); err != nil {
 		return err
 	}
 	return nil
