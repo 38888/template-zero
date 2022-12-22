@@ -29,6 +29,11 @@ func main() {
 			reflection.Register(grpcServer)
 		}
 	})
+
+	//rpc log
+    s.AddUnaryInterceptors(rpcserver.LoggerInterceptor)
+
+
 	defer s.Stop()
 
 	fmt.Printf("Starting rpc server at %s...\n", c.ListenOn)
