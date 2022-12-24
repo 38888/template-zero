@@ -2,7 +2,7 @@ func (m *default{{.upperStartCamelObject}}Model) FindOne(ctx context.Context, {{
 
 	{{.lowerStartCamelObject}} := m.conn.{{.upperStartCamelObject}}
 
-	{{.ifFields}}
+
 
 
     resp, err := {{.lowerStartCamelObject}}.WithContext(ctx).Where({{.lowerStartCamelObject}}.{{.UpperStartCamelPrimaryKey}}.Eq({{.lowerStartCamelPrimaryKey}})).Take()
