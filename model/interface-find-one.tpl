@@ -1,2 +1,6 @@
 FindOne(ctx context.Context, {{.lowerStartCamelPrimaryKey}} {{.dataType}}) (*entity.{{.upperStartCamelObject}}, error)
 FindOneByQuery(ctx context.Context, data *entity.{{.upperStartCamelObject}}) (*entity.{{.upperStartCamelObject}}, error)
+FindCount(ctx context.Context, data *entity.{{.upperStartCamelObject}}) (int64, error)
+FindAll(ctx context.Context, data *entity.{{.upperStartCamelObject}}) ([]*entity.{{.upperStartCamelObject}}, error)
+FindPageListByIdDESC(ctx context.Context,data *entity.{{.upperStartCamelObject}}, preMinId, pageSize int64) ([]*entity.{{.upperStartCamelObject}}, error)
+FindPageListByIdASC(ctx context.Context, data *entity.{{.upperStartCamelObject}}, preMaxId, pageSize int64) ([]*entity.{{.upperStartCamelObject}}, error)
