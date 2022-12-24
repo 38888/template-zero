@@ -12,3 +12,13 @@ func (m *default{{.upperStartCamelObject}}Model) FindOne(ctx context.Context, {{
 	return resp, nil
 
 }
+func (m *default{{.upperStartCamelObject}}Model) FindOneByQuery(ctx context.Context, data *entity.{{.upperStartCamelObject}}) (*entity.{{.upperStartCamelObject}}, error){
+    {{.lowerStartCamelObject}} := m.conn.{{.upperStartCamelObject}}
+    {{.ifFields}}
+
+    resp, err := {{.lowerStartCamelObject}}Qb.Take()
+    if err != nil {
+    	return nil, err
+    }
+    return resp, nil
+}

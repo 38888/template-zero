@@ -15,3 +15,8 @@ func (m *default{{.upperStartCamelObject}}Model) Update(ctx context.Context, new
 
 
 }
+func (m *default{{.upperStartCamelObject}}Model)  Trans(ctx context.Context, fn func(context context.Context) error) error {
+	return m.conn.Transaction(func(tx *dao.Query) error {
+		return fn(ctx)
+	})
+}
