@@ -6,8 +6,8 @@ package {{.pkg}}
 {{.types}}
 {{.new}}
 {{.delete}}
-{{.find}}
 {{.insert}}
 {{.update}}
+{{.find}}
 {{.extraMethod}}
 {{.tableName}}
