@@ -31,9 +31,20 @@ func (m *default{{.upperStartCamelObject}}Model) FindCount(ctx context.Context, 
 	}
 	return count, nil
 }
-func (m *default{{.upperStartCamelObject}}Model) FindAll(ctx context.Context, data *entity.{{.upperStartCamelObject}}) ([]*entity.{{.upperStartCamelObject}}, error){
+func (m *default{{.upperStartCamelObject}}Model) FindAll(ctx context.Context, data *entity.{{.upperStartCamelObject}}, orderBy string, isDesc bool) ([]*entity.{{.upperStartCamelObject}}, error){
     {{.lowerStartCamelObject}} := m.conn.{{.upperStartCamelObject}}
+
     {{.ifFields}}
+
+    orderCol, ok := {{.lowerStartCamelObject}}.GetFieldByName(orderBy) // maybe orderColStr == "id"
+    if !ok {
+    	return nil, NotContainsOrderColStrErr
+   	}
+   	if isDesc {
+    	{{.lowerStartCamelObject}}Qb = {{.lowerStartCamelObject}}Qb.Order(orderCol.Desc())
+   	} else {
+   		{{.lowerStartCamelObject}}Qb = {{.lowerStartCamelObject}}Qb.Order(orderCol)
+   	}
 
     resp, err := {{.lowerStartCamelObject}}Qb.Find()
     if err != nil {
@@ -41,18 +52,18 @@ func (m *default{{.upperStartCamelObject}}Model) FindAll(ctx context.Context, da
     }
     return resp, nil
 }
-func (m *default{{.upperStartCamelObject}}Model) FindPageListByIdDESC(ctx context.Context,data *entity.{{.upperStartCamelObject}}, preMinId, pageSize int64) ([]*entity.{{.upperStartCamelObject}}, error){
+func (m *default{{.upperStartCamelObject}}Model) FindPageListByPage(ctx context.Context,data *entity.{{.upperStartCamelObject}}, page, pageSize int64, orderBy string, isDesc bool) ([]*entity.{{.upperStartCamelObject}}, error){
     {{.lowerStartCamelObject}} := m.conn.{{.upperStartCamelObject}}
     {{.ifFields}}
-     resp, err := {{.lowerStartCamelObject}}Qb.Order({{.lowerStartCamelObject}}.{{.UpperStartCamelPrimaryKey}}.Desc()).Find()
-    if err != nil {
-    	return nil, err
-    }
-    return resp, nil
-}
-func (m *default{{.upperStartCamelObject}}Model) FindPageListByIdASC(ctx context.Context,data *entity.{{.upperStartCamelObject}}, preMinId, pageSize int64) ([]*entity.{{.upperStartCamelObject}}, error){
-    {{.lowerStartCamelObject}} := m.conn.{{.upperStartCamelObject}}
-    {{.ifFields}}
+     orderCol, ok := {{.lowerStartCamelObject}}.GetFieldByName(orderBy) // maybe orderColStr == "id"
+     if !ok {
+        return nil, NotContainsOrderColStrErr
+     }
+     if isDesc {
+        {{.lowerStartCamelObject}}Qb = {{.lowerStartCamelObject}}Qb.Order(orderCol.Desc())
+     } else {
+       	{{.lowerStartCamelObject}}Qb = {{.lowerStartCamelObject}}Qb.Order(orderCol)
+     }
      resp, err := {{.lowerStartCamelObject}}Qb.Find()
     if err != nil {
     	return nil, err
