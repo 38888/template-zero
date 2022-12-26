@@ -52,7 +52,7 @@ func (m *default{{.upperStartCamelObject}}Model) FindAll(ctx context.Context, da
     }
     return resp, nil
 }
-func (m *default{{.upperStartCamelObject}}Model) FindPageListByPage(ctx context.Context,data *entity.{{.upperStartCamelObject}}, page, pageSize int64, orderBy string, isDesc bool) ([]*entity.{{.upperStartCamelObject}}, error){
+func (m *default{{.upperStartCamelObject}}Model) FindPageListByPage(ctx context.Context,data *entity.{{.upperStartCamelObject}}, page, pageSize int, orderBy string, isDesc bool) ([]*entity.{{.upperStartCamelObject}}, error){
     {{.lowerStartCamelObject}} := m.conn.{{.upperStartCamelObject}}
     {{.ifFields}}
      orderCol, ok := {{.lowerStartCamelObject}}.GetFieldByName(orderBy) // maybe orderColStr == "id"
@@ -64,7 +64,7 @@ func (m *default{{.upperStartCamelObject}}Model) FindPageListByPage(ctx context.
      } else {
        	{{.lowerStartCamelObject}}Qb = {{.lowerStartCamelObject}}Qb.Order(orderCol)
      }
-     resp, err := {{.lowerStartCamelObject}}Qb.Find()
+     resp, err := {{.lowerStartCamelObject}}Qb.FindByPage(pagination.GetPageOffset(page, pageSize), pageSize)
     if err != nil {
     	return nil, err
     }
