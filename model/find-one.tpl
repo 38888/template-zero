@@ -57,7 +57,7 @@ func (m *default{{.upperStartCamelObject}}Model) FindPageListByPage(ctx context.
     {{.ifFields}}
      orderCol, ok := {{.lowerStartCamelObject}}.GetFieldByName(orderBy) // maybe orderColStr == "id"
      if !ok {
-        return nil, NotContainsOrderColStrErr
+        return nil,0, NotContainsOrderColStrErr
      }
      if isDesc {
         {{.lowerStartCamelObject}}Qb = {{.lowerStartCamelObject}}Qb.Order(orderCol.Desc())
