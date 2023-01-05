@@ -49,12 +49,13 @@ func (m *default{{.upperStartCamelObject}}Model) FindAll(ctx context.Context, da
          if !ok {
             return nil,0, NotContainsOrderColStrErr
          }
+         if isDesc {
+        {{.lowerStartCamelObject}}Qb = {{.lowerStartCamelObject}}Qb.Order(orderCol.Desc())
+        } else {
+            {{.lowerStartCamelObject}}Qb = {{.lowerStartCamelObject}}Qb.Order(orderCol)
+        }
     }
-   	if isDesc {
-    	{{.lowerStartCamelObject}}Qb = {{.lowerStartCamelObject}}Qb.Order(orderCol.Desc())
-   	} else {
-   		{{.lowerStartCamelObject}}Qb = {{.lowerStartCamelObject}}Qb.Order(orderCol)
-   	}
+
 
     resp, err := {{.lowerStartCamelObject}}Qb.Find()
     if err != nil {
@@ -70,16 +71,17 @@ func (m *default{{.upperStartCamelObject}}Model) FindPageListByPage(ctx context.
     }
     if orderBy != ""{
         orderCol, ok := {{.lowerStartCamelObject}}.GetFieldByName(orderBy) // maybe orderColStr == "id"
-         if !ok {
+        if !ok {
             return nil,0, NotContainsOrderColStrErr
-         }
+        }
+        if isDesc {
+         {{.lowerStartCamelObject}}Qb = {{.lowerStartCamelObject}}Qb.Order(orderCol.Desc())
+        } else {
+           {{.lowerStartCamelObject}}Qb = {{.lowerStartCamelObject}}Qb.Order(orderCol)
+        }
     }
 
-     if isDesc {
-        {{.lowerStartCamelObject}}Qb = {{.lowerStartCamelObject}}Qb.Order(orderCol.Desc())
-     } else {
-       	{{.lowerStartCamelObject}}Qb = {{.lowerStartCamelObject}}Qb.Order(orderCol)
-     }
+
      resp,count, err := {{.lowerStartCamelObject}}Qb.FindByPage(pagination.GetPageOffset(page, pageSize), pageSize)
     if err != nil {
    		return nil, 0, err
